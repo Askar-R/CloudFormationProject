@@ -1,0 +1,5 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Academy Demo CloudFormation
+Resources:
+  razanBucket:
+    Type: AWS::S3::Bucket
