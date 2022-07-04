@@ -3,3 +3,7 @@ Description: Academy Demo CloudFormation
 Resources:
   razanBucket:
     Type: AWS::S3::Bucket
+  RazanQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      VisibilityTimeout: 30

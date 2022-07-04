@@ -1,6 +1,0 @@
-AWSTemplateFormatVersion: 2010-09-09
-Description: Academy Demo CloudFormation
-
-
-
-  aws cloudformation create-stack --stack-name razanteststack --template-body C:\Users\Razan\OneDrive - Academic Work Academy\Desktop\Week05\Monday_W5\CloudFormation_Template\cf_template.yaml
