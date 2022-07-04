@@ -23,3 +23,26 @@ Resources:
       AvailabilityZone: us-east-1a
       ImageId: !Ref LatestAmiId
       InstanceType: !Ref InstanceTypeParameter
+  MyLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Scheme: internet-facing
+      Subnets:
+        - "subnet-05dc5323a90701745"
+
+        - "subnet-0462080141c44392d"
+
+        - "subnet-0441c0b1c024fa494"
+
+        - "subnet-0e8cecdb378d728af"
+
+        - "subnet-0e2ac274cda7f0de0"
+
+        - "subnet-011535b5492b30052"
+      Tags:
+        - Key: Name
+          Value: RazanALB
+Outputs:
+  MyLoadBalancerDNSName:
+    Description: The DNSName of the backup load balancer
+    Value: !GetAtt MyLoadBalancer.DNSName
