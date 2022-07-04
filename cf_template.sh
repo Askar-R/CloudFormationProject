@@ -1,4 +1,7 @@
 #Create Stack 
-aws cloudformation create-stack --stack-name razanteststack --template-body file://s3.yaml 
+aws cloudformation create-stack --stack-name razanstack --template-body file://s3.yaml 
+#Validate Stack
+aws cloudformation validate-template --template-body file://s3.yaml
 #Deploy changes to stack
-aws cloudformation deploy --template-file s3.yaml --stack-name razanteststack
+aws cloudformation deploy --template-file s3.yaml --stack-name razanstack
+#Update Stack
