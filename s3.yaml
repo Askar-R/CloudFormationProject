@@ -10,6 +10,7 @@ Parameters:
   LatestAmiId:
     Type: "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>"
     Default: "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+
 Resources:
   razanBucket:
     Type: AWS::S3::Bucket
@@ -17,15 +18,21 @@ Resources:
     Type: AWS::SQS::Queue
     Properties:
       VisibilityTimeout: 30
+
   RazanEc2:
     Type: "AWS::EC2::Instance"
     Properties:
+      SecurityGroups:
+        - !Ref SecurityGroupEC2
       AvailabilityZone: us-east-1a
       ImageId: !Ref LatestAmiId
       InstanceType: !Ref InstanceTypeParameter
+
   MyLoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
+      SecurityGroups:
+        - !GetAtt SecurityGroupALB.GroupId
       Scheme: internet-facing
       Subnets:
         - "subnet-05dc5323a90701745"
@@ -42,6 +49,30 @@ Resources:
       Tags:
         - Key: Name
           Value: RazanALB
+
+  SecurityGroupEC2:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: RazanSecurityEC2
+      GroupDescription: Allow http to client host
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: RazanSecurityEC2
+
+  SecurityGroupALB:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow http to client host
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
 Outputs:
   MyLoadBalancerDNSName:
     Description: The DNSName of the backup load balancer
